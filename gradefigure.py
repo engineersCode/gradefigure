@@ -157,6 +157,20 @@ def ax_has_data(ax, xref, yref):
   yref: list or numpy.ndarray of floats
     The y-data to use as reference.
 
+  If testing histograms 
+  xref: list that contains the rectangle heights
+  yref: list that contains the tuples of xcoord and ycoord where each bar starts
+
+  This are obtained by running the following lines for the plot that 
+  used used as reference. 
+
+  xref =[]
+  yref = []
+  for rectangle in ax[0].patches: # ax= fig.get_axes() , we need the element
+                                  # of the plot we want, if only one plot we grab 0
+    xref.append(rectangle.get_height())
+    yref.append(rectangle.get_xy()
+
   Returns
   -------
   ans: boolean
@@ -192,6 +206,20 @@ def ax_has_data(ax, xref, yref):
     if len(x) == len(xref) and len(y) == len(yref):
       if numpy.allclose(x, xref) and numpy.allclose(y, yref):
         return True
+  # Check in matplotlib.patches.Rectangle (used for histograms)
+  x =[]
+  y = []
+  for rectangle in ax.patches:
+    x.append(rectangle.get_height())
+    y.append(rectangle.get_xy())
+    if len(x) == len(xref) and len(y) == len(yref):
+      unzipped_y = list(zip(*y))
+      unzipped_yref = list(zip(*yref))
+      if (numpy.allclose(x, xref) and 
+      numpy.allclose( unzipped_y[0], unzipped_yref[0]) and 
+      numpy.allclose( unzipped_y[1], unzipped_yref[1])):
+        return True
+
   return False
 
 
