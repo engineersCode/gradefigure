@@ -35,9 +35,9 @@ def _grade_quiver(ax, expected_tails, expected_vectors):
         actual = set(zip(X.flatten(), Y.flatten(), U.flatten(), V.flatten()))
         # if the multisets match exactly, grading is 100%
         if actual == expected:
-            return 100.0, log
+            return 100.0
 
-    return 0.0, log
+    return 0.0
 
 
 def grade_plot_vector(vectors, tails=None):
